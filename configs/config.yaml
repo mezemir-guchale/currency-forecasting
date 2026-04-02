@@ -1,0 +1,46 @@
+project:
+  name: "Currency Exchange Rate Forecasting"
+  version: "1.0.0"
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  currency_pairs:
+    - "EUR/USD"
+    - "GBP/USD"
+    - "USD/JPY"
+    - "AUD/USD"
+    - "USD/CHF"
+  years: 3
+  seed: 42
+
+features:
+  lag_periods: [1, 2, 3, 5, 7, 14, 21]
+  rolling_windows: [5, 10, 21, 50]
+  decomposition_period: 252  # Trading days in a year
+
+models:
+  arima:
+    order: [2, 1, 2]
+    seasonal: false
+  sma_window: 21
+  ema_span: 21
+  forecast_horizon: 30
+  train_ratio: 0.8
+
+evaluation:
+  metrics:
+    - "MAE"
+    - "RMSE"
+    - "MAPE"
+    - "directional_accuracy"
+
+visualization:
+  output_dir: "reports/figures"
+  figsize: [14, 8]
+  dpi: 150
+
+logging:
+  level: "INFO"
+  log_dir: "reports/logs"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
