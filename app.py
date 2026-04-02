@@ -298,9 +298,11 @@ with tab_overview:
         ))
 
     # Train/test split line
-    fig_main.add_vline(
-        x=train_dates[-1], line_dash="dot", line_color="gray",
-        annotation_text="Train / Test Split",
+    split_date = str(train_dates[-1])
+    fig_main.add_shape(
+        type="line", x0=split_date, x1=split_date,
+        y0=0, y1=1, yref="paper",
+        line=dict(color="gray", dash="dot"),
     )
 
     fig_main.update_layout(
@@ -399,7 +401,10 @@ with tab_residuals:
             line=dict(color="#636EFA"),
             marker=dict(size=4),
         ))
-        fig_res.add_hline(y=0, line_dash="dash", line_color="gray")
+        fig_res.add_shape(
+            type="line", x0=0, x1=1, xref="paper", y0=0, y1=0,
+            line=dict(color="gray", dash="dash"),
+        )
         fig_res.update_layout(
             title=f"{res_model} — Residuals Over Time",
             xaxis_title="Date", yaxis_title="Residual",
